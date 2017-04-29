@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -44,8 +46,15 @@ public class FileService {
 			throw new IOException();
 		}
 		
+		//populate automatically calculated metadata
+		SimpleDateFormat ISO = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+		String uploadDate = ISO.format(new Date());
+		
+		
 		BufferedWriter metaData = new BufferedWriter(new FileWriter(new File(modifiedPath+modifiedFilename.substring(0, periodIndex)+"\\metadata.txt")));
 		metaData.write("Owner "+DELIMITER+" "+owner);
+		metaData.newLine();
+		metaData.write("Upload_Date "+DELIMITER+" "+uploadDate);
 		metaData.close();
 	}
 	

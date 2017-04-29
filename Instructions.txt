@@ -2,3 +2,5 @@ The file manager application requires one evironment parameter, "FILEPATH", the 
 This folder will need to have permissions set low enough to allow Java to read and write files to it.
 The application runs on port 8080, and currently has one endpoint: "/upload". An example of how to use the endpoint can be seen at upload.html,
 attached to this project. 
+The max size of a file to upload is 1MB. Currently the application is very bad about telling you when something goes wrong, but I would start by 
+checking permissions and file size.

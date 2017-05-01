@@ -5,10 +5,13 @@ The application runs on port 8080, and cannot currently be changed.
 ENDPOINTS:
 
 "/file/upload" Pass a file of up to 1MB to the server's file system. The request takes both the file itself and a request parameter for "owner",
-the most basic type of metadata associated with each file. Because the metadata file is stored at the same level as the file, you cannot upload 
-a file named "metadata.txt".
+the most basic type of metadata associated with each file. The "Upload_Date" parameter, saved in ISO 8601 format, is automatically generated.
+Because the metadata file is stored at the same level as the file, you cannot upload a file named "metadata.txt". In addition, you cannot 
+currently save two files of the same name but different extensions.
 An example of how to use the endpoint can be seen at upload.html, attached to this project.
  
 "/file/metaData" request metadata by type name. The two request parameters are "file", the name of the file you want data from, and "name", the
 name of the variable you want to access. All variables are returned as strings. Applications that want more specific kinds of data should save
 metadata in an appropriate format and parse upon retrieval.
+
+"/file" return file by exact file name. There is one parameter, "file", that must be the full name of the file requested, with extension.

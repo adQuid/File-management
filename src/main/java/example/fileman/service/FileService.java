@@ -1,12 +1,19 @@
 package example.fileman.service;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
 
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -76,6 +83,25 @@ public class FileService {
 		
 		reader.close();
 		return null;
+	}
+	
+	public byte[] searchByName(String name){
+		String modifiedFilename = name.replaceAll("'\'", "");
+		String modifiedPath = getModifiedPath();
+		int periodIndex = modifiedFilename.indexOf('.')==-1?modifiedFilename.length():modifiedFilename.indexOf('.');
+		
+		try {			
+			byte[] retval;
+			File file = new File(modifiedPath+modifiedFilename.substring(0, periodIndex)+"\\"+name);
+			FileInputStream fis = new FileInputStream(file);
+			retval = new byte[(int)file.length()];
+			fis.read(retval);
+			fis.close();
+
+			return retval;
+		} catch (IOException e) {
+			return null; //This is expected if the file doesn't exist
+		}				
 	}
 	
 	private String getModifiedPath(){
